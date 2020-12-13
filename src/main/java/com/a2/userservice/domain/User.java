@@ -13,14 +13,13 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
-    private String username;
     private String password;
     private String passportNo;
     @OneToMany(mappedBy = "user")
     private List<Card> cards;
     @ManyToOne(optional = false)
     private Role role;
-    private BigDecimal miles;
+    private Integer miles;
 
     public User() {
     }
@@ -57,14 +56,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -97,11 +88,11 @@ public class User {
         this.role = role;
     }
 
-    public BigDecimal getMiles() {
+    public Integer getMiles() {
         return miles;
     }
 
-    public void setMiles(BigDecimal miles) {
+    public void setMiles(Integer miles) {
         this.miles = miles;
     }
 }
