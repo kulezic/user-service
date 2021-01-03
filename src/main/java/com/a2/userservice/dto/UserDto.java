@@ -8,6 +8,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String passportNo;
+    private String password;
 
     public Long getId() {
         return id;
@@ -47,5 +48,13 @@ public class UserDto {
 
     public void setPassportNo(String passportNo) {
         this.passportNo = passportNo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

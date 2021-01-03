@@ -36,4 +36,8 @@ public class Card {
     public void setCif(Integer cif) {
         this.cif = cif;
     }
+
+    public Long getId() {
+        return id;
+    }
 }
