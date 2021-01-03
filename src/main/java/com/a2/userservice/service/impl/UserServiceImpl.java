@@ -1,4 +1,4 @@
-package com.a2.userservice.service;
+package com.a2.userservice.service.impl;
 
 import com.a2.userservice.domain.Admin;
 import com.a2.userservice.domain.Card;
@@ -13,6 +13,7 @@ import com.a2.userservice.mapper.CardMapper;
 import com.a2.userservice.mapper.UserMapper;
 import com.a2.userservice.repository.*;
 import com.a2.userservice.secutiry.service.TokenService;
+import com.a2.userservice.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
@@ -102,12 +103,14 @@ public class UserServiceImpl implements UserService {
          userRepository.save(user);
     }
 
-    public UserDto add(UserCreateDto userCreateDto) {
+    @Override
+    public UserDto addUser(UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoToUser(userCreateDto);
         userRepository.save(user);
         return userMapper.userToUserDto(user);
     }
 
+    @Override
     public CardDto addCard(CreateCardDto createCardDto) {
         Card card = cardMapper.cardCreateDtoToCard(createCardDto);
         cardRepository.save(card);
@@ -115,11 +118,16 @@ public class UserServiceImpl implements UserService {
         return cardDto;
     }
 
+    @Override
     public UserDto update(UserDto userDto) {
         return  null;
     }
 
-//    public UserDto cancelFlight(Long id) {
-//
-//    }
+    @Override
+    public void incrementMiles(IncrementMilesDto incrementMilesDto) {
+        User user = userRepository.findById(incrementMilesDto.getUserId()).
+                orElseThrow(() -> new NotFoundException(String.format("User with id: %d not found.", incrementMilesDto.getUserId())));
+        user.setMiles(user.getMiles() + incrementMilesDto.getMiles());
+        userRepository.save(user);
+    }
 }

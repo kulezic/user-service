@@ -2,12 +2,8 @@ package com.a2.userservice.controller;
 
 import com.a2.userservice.dto.*;
 import com.a2.userservice.secutiry.CheckSecurity;
-import com.a2.userservice.service.UserServiceImpl;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import com.a2.userservice.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +14,9 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserServiceImpl userService;
+    private UserService userService;
 
-    public UserController(UserServiceImpl userService){
+    public UserController(UserService userService){
         this.userService = userService;
     }
 
@@ -57,7 +53,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserDto> saveUser(@RequestBody @Valid UserCreateDto userCreateDto) {
-        return new ResponseEntity<>(userService.add(userCreateDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.addUser(userCreateDto), HttpStatus.CREATED);
     }
 
     @PostMapping("/addcard")
