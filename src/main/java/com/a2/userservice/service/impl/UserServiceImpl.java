@@ -1,7 +1,8 @@
-package com.a2.userservice.service;
+package com.a2.userservice.service.impl;
 
 import com.a2.userservice.domain.User;
 import com.a2.userservice.domain.UserRank;
+import com.a2.userservice.dto.CancelMilesDto;
 import com.a2.userservice.dto.DiscountDto;
 import com.a2.userservice.dto.TokenRequestDto;
 import com.a2.userservice.dto.TokenResponseDto;
@@ -11,6 +12,7 @@ import com.a2.userservice.repository.RoleRepository;
 import com.a2.userservice.repository.UserRankRepository;
 import com.a2.userservice.repository.UserRepository;
 import com.a2.userservice.secutiry.service.TokenService;
+import com.a2.userservice.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     private TokenService tokenService;
     private UserRepository userRepository;
@@ -63,5 +65,14 @@ public class UserServiceImpl {
         claims.put("role", user.getRole().getName());
         //Generate token
         return new TokenResponseDto(tokenService.generate(claims));
+    }
+
+    @Override
+    public void cancelMiles(CancelMilesDto cancelMilesDto) {
+         User user = userRepository.findById(cancelMilesDto.getUserId())
+                 .orElseThrow(() -> new NotFoundException(String
+                 .format("User with id: %d not found.", cancelMilesDto.getUserId())));
+         user.setMiles(user.getMiles() - cancelMilesDto.getMiles());
+         userRepository.save(user);
     }
 }

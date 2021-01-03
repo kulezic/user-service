@@ -92,7 +92,7 @@ public class User {
         return miles;
     }
 
-    public void setMiles(Integer miles) {
+    public void setMiles(long miles) {
         this.miles = miles;
     }
 }
