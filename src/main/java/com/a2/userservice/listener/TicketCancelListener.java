@@ -1,32 +1,31 @@
 package com.a2.userservice.listener;
 
-import com.a2.userservice.dto.CancelMilesDto;
+import com.a2.userservice.dto.TicketCancelDto;
 import com.a2.userservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
-import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
 @Component
-public class CancelMilesListener {
+public class TicketCancelListener {
 
     private ObjectMapper objectMapper;
     private UserService userService;
 
-    public CancelMilesListener(ObjectMapper objectMapper, UserService userService) {
+    public TicketCancelListener(ObjectMapper objectMapper, UserService userService) {
         this.objectMapper = objectMapper;
         this.userService = userService;
     }
 
-    @JmsListener(destination = "${destination.cancel-miles}", concurrency = "5-10")
+    @JmsListener(destination = "${destination.cancel-ticket", concurrency = "5-10")
     public void handleCancelMiles(Message message){
         try {
             String jsonText = ((TextMessage)message).getText();
-            CancelMilesDto cancelMilesDto = objectMapper.readValue(jsonText, CancelMilesDto.class);
-            userService.cancelMiles(cancelMilesDto);
+            TicketCancelDto ticketCancelDto = objectMapper.readValue(jsonText, TicketCancelDto.class);
+            userService.cancelTicket(ticketCancelDto);
         } catch (Exception  e) {
             e.printStackTrace();
         }

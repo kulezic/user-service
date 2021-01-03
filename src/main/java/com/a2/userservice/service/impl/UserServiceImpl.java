@@ -5,7 +5,6 @@ import com.a2.userservice.domain.Card;
 import com.a2.userservice.domain.User;
 import com.a2.userservice.domain.UserRank;
 import com.a2.userservice.dto.*;
-import com.a2.userservice.dto.CancelMilesDto;
 import com.a2.userservice.dto.DiscountDto;
 import com.a2.userservice.dto.TokenRequestDto;
 import com.a2.userservice.dto.TokenResponseDto;
@@ -14,7 +13,6 @@ import com.a2.userservice.mapper.CardMapper;
 import com.a2.userservice.mapper.UserMapper;
 import com.a2.userservice.repository.*;
 import com.a2.userservice.secutiry.service.TokenService;
-import com.a2.userservice.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
@@ -96,11 +94,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void cancelMiles(CancelMilesDto cancelMilesDto) {
-         User user = userRepository.findById(cancelMilesDto.getUserId())
+    public void cancelTicket(TicketCancelDto ticketCancelDto) {
+         User user = userRepository.findById(ticketCancelDto.getUserId())
                  .orElseThrow(() -> new NotFoundException(String
-                 .format("User with id: %d not found.", cancelMilesDto.getUserId())));
-         user.setMiles(user.getMiles() - cancelMilesDto.getMiles());
+                 .format("User with id: %d not found.", ticketCancelDto.getUserId())));
+         user.setMiles(user.getMiles() - ticketCancelDto.getMiles());
          userRepository.save(user);
     }
 
