@@ -19,7 +19,9 @@ public class User {
     private List<Card> cards;
     @ManyToOne(optional = false)
     private Role role;
-    private Integer miles;
+    private Long miles;
+    @OneToOne
+    private Card priorityCardId;
 
     public User() {
     }
@@ -88,11 +90,12 @@ public class User {
         this.role = role;
     }
 
-    public Integer getMiles() {
+    public Long getMiles() {
         return miles;
     }
 
     public void setMiles(long miles) {
         this.miles = miles;
     }
+
 }

@@ -9,6 +9,8 @@ public class UserDto {
     private String lastName;
     private String passportNo;
     private String password;
+    private CardDto priorityCard;
+
 
     public Long getId() {
         return id;

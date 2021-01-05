@@ -48,7 +48,7 @@ public class UserController {
     @PostMapping("/update")
     @CheckSecurity(roles = {"ROLE_USER"})
     public ResponseEntity<UserDto> updateUser(@RequestBody @Valid UserDto userDto) {
-        return new ResponseEntity<>(userService.update(userDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.update(userDto), HttpStatus.OK);
     }
 
     @PostMapping("/register")
