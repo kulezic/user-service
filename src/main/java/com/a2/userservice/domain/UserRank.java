@@ -3,7 +3,7 @@ package com.a2.userservice.domain;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-
+@Entity
 public class UserRank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
