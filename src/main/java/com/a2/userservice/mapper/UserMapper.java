@@ -31,6 +31,7 @@ public class UserMapper {
         user.setFirstName(userCreateDto.getFirstName());
         user.setLastName(userCreateDto.getLastName());
         user.setPassword(userCreateDto.getPassword());
+        user.setMiles(0);
         user.setRole(roleRepository.findRoleByName("ROLE_USER").get());
 
         //TODO ako treba za karticu

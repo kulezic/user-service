@@ -24,4 +24,6 @@ public interface UserService {
     void cancelTicket(TicketCancelDto ticketCancelDto);
 
     List<Admin> getAdmin();
+
+    UserDto getUser(Long id);
 }

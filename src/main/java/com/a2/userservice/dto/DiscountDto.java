@@ -1,10 +1,12 @@
 package com.a2.userservice.dto;
 
+import java.math.BigDecimal;
+
 public class DiscountDto {
 
-    private Double discount;
+    private BigDecimal discount;
 
-    public Double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
@@ -12,11 +14,11 @@ public class DiscountDto {
 
     }
 
-    public DiscountDto(Double discount) {
+    public DiscountDto(BigDecimal discount) {
         this.discount = discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 }

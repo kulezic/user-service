@@ -18,6 +18,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -51,14 +52,16 @@ public class UserServiceImpl implements UserService {
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(String
                         .format("User with id: %d not found.", id)));
+        System.out.println(user);
         List<UserRank> userRankList = userRankRepository.findAll();
         //get discount
-        Double discount = userRankList.stream()
+        BigDecimal discount = BigDecimal.valueOf(userRankList.stream()
                 .filter(userRank -> userRank.getMaxNumberOfMiles() >= user.getMiles()
                         && userRank.getMinNumberOfMiles() <= user.getMiles())
                 .findAny()
                 .get()
-                .getDiscount();
+                .getDiscount());
+        System.out.println(discount);
         return new DiscountDto(discount);
     }
 
@@ -106,6 +109,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Admin> getAdmin() {
         return adminRepository.findAll();
+    }
+
+    @Override
+    public UserDto getUser(Long id) {
+        User user = userRepository.findById(id).
+            orElseThrow(() -> new NotFoundException(String.format("User with id: %d not found.", id)));
+        return userMapper.userToUserDto(user);
     }
 
     @Override

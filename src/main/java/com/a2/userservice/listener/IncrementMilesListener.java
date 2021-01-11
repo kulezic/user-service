@@ -4,10 +4,12 @@ import com.a2.userservice.dto.TicketCancelDto;
 import com.a2.userservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.stereotype.Component;
 
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
+@Component
 public class IncrementMilesListener {
 
     private ObjectMapper objectMapper;
@@ -18,7 +20,8 @@ public class IncrementMilesListener {
         this.userService = userService;
     }
 
-    @JmsListener(destination = "${destination.increment-miles}", concurrency = "5-10")
+    //, concurrency = "5-10"
+    @JmsListener(destination = "${destination.increment-miles}")
     public void handleCancelMiles(Message message){
         try {
             String jsonText = ((TextMessage)message).getText();

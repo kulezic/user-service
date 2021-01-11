@@ -21,7 +21,8 @@ public class TicketCancelListener {
         this.userService = userService;
     }
 
-    @JmsListener(destination = "${destination.cancel-ticket}", concurrency = "5-10")
+    //, concurrency = "5-10"
+    @JmsListener(destination = "${destination.cancel-ticket}")
     public void handleCancelMiles(Message message){
         try {
             String jsonText = ((TextMessage)message).getText();

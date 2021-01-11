@@ -37,9 +37,9 @@ public class UserController {
 //
 //        return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
 //    }
-
     @GetMapping("/{id}/discount")
     public ResponseEntity<DiscountDto> getDiscount(@PathVariable("id") Long id) {
+        System.out.println(id + " DISCOUNT");
         return new ResponseEntity<>(userService.findDiscount(id), HttpStatus.OK);
     }
     @GetMapping("/admins")
@@ -60,6 +60,10 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<UserDto> saveUser(@RequestBody @Valid UserCreateDto userCreateDto) {
         return new ResponseEntity<>(userService.addUser(userCreateDto), HttpStatus.CREATED);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUser(@PathVariable("id") Long id ) {
+        return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
     @PostMapping("/addcard")
