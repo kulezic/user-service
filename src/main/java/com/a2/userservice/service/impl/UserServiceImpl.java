@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
                         .format("User with id: %d not found.", id)));
         List<UserRank> userRankList = userRankRepository.findAll();
         //get discount
-        Integer discount = userRankList.stream()
+        Double discount = userRankList.stream()
                 .filter(userRank -> userRank.getMaxNumberOfMiles() >= user.getMiles()
                         && userRank.getMinNumberOfMiles() <= user.getMiles())
                 .findAny()
@@ -101,6 +101,11 @@ public class UserServiceImpl implements UserService {
                  .format("User with id: %d not found.", ticketCancelDto.getUserId())));
          user.setMiles(user.getMiles() - ticketCancelDto.getMiles());
          userRepository.save(user);
+    }
+
+    @Override
+    public List<Admin> getAdmin() {
+        return adminRepository.findAll();
     }
 
     @Override

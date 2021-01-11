@@ -11,9 +11,16 @@ public class UserRank {
     private String name;
     private Integer minNumberOfMiles;
     private Integer maxNumberOfMiles;
-    private Integer discount;
+    private Double discount;
 
     public UserRank() {
+    }
+
+    public UserRank(String name, Integer minNumberOfMiles, Integer maxNumberOfMiles, Double discount) {
+        this.name = name;
+        this.minNumberOfMiles = minNumberOfMiles;
+        this.maxNumberOfMiles = maxNumberOfMiles;
+        this.discount = discount;
     }
 
     public Long getId() {
@@ -48,11 +55,11 @@ public class UserRank {
         this.maxNumberOfMiles = maxNumberOfMiles;
     }
 
-    public Integer getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 }

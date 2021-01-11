@@ -1,6 +1,9 @@
 package com.a2.userservice.service;
 
+import com.a2.userservice.domain.Admin;
 import com.a2.userservice.dto.*;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -19,4 +22,6 @@ public interface UserService {
     void incrementMiles(IncrementMilesDto incrementMilesDto);
 
     void cancelTicket(TicketCancelDto ticketCancelDto);
+
+    List<Admin> getAdmin();
 }

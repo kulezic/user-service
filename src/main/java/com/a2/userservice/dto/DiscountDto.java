@@ -2,9 +2,9 @@ package com.a2.userservice.dto;
 
 public class DiscountDto {
 
-    private Integer discount;
+    private Double discount;
 
-    public Integer getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
@@ -12,11 +12,11 @@ public class DiscountDto {
 
     }
 
-    public DiscountDto(Integer discount) {
+    public DiscountDto(Double discount) {
         this.discount = discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 }

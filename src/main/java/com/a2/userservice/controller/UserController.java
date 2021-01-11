@@ -1,5 +1,6 @@
 package com.a2.userservice.controller;
 
+import com.a2.userservice.domain.Admin;
 import com.a2.userservice.dto.*;
 import com.a2.userservice.secutiry.CheckSecurity;
 import com.a2.userservice.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -39,6 +41,10 @@ public class UserController {
     @GetMapping("/{id}/discount")
     public ResponseEntity<DiscountDto> getDiscount(@PathVariable("id") Long id) {
         return new ResponseEntity<>(userService.findDiscount(id), HttpStatus.OK);
+    }
+    @GetMapping("/admins")
+    public ResponseEntity<List<Admin>> getAdmins() {
+        return new ResponseEntity<>(userService.getAdmin(), HttpStatus.OK);
     }
     /*@PostMapping("/{id}/cancelflight")
     public ResponseEntity<DiscountDto> cancelFlight(@PathVariable("id") Long id) {
