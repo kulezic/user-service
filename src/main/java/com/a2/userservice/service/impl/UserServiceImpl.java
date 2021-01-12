@@ -19,6 +19,7 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -119,9 +120,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto getUserByEmail(String email) {
+        User user = userRepository.findUserByEmail(email).orElseThrow(() -> new NotFoundException(String.format("User with email: %s not found.", email)));
+        return userMapper.userToUserDto(user);
+    }
+
+    @Override
+    public List<CardDto> getUserCards(Long id) {
+        List<Card> cards = cardRepository.getUserCards(id);
+        List<CardDto> cardDtos = new ArrayList<>();
+        for(Card c : cards){
+            cardDtos.add(cardMapper.cardToCardDto(c));
+        }
+        return cardDtos;
+    }
+
+    @Override
     public UserDto addUser(UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoToUser(userCreateDto);
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
         return userMapper.userToUserDto(user);
     }
 

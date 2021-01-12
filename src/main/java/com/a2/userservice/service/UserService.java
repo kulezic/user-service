@@ -26,4 +26,8 @@ public interface UserService {
     List<Admin> getAdmin();
 
     UserDto getUser(Long id);
+
+    UserDto getUserByEmail(String email);
+
+    List<CardDto> getUserCards(Long id);
 }

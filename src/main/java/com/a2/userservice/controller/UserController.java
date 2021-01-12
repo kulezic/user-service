@@ -37,7 +37,7 @@ public class UserController {
 //
 //        return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
 //    }
-    @GetMapping("/{id}/discount")
+    @GetMapping("/discount/{id}")
     public ResponseEntity<DiscountDto> getDiscount(@PathVariable("id") Long id) {
         System.out.println(id + " DISCOUNT");
         return new ResponseEntity<>(userService.findDiscount(id), HttpStatus.OK);
@@ -64,6 +64,16 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable("id") Long id ) {
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+    }
+    @GetMapping("/{id}/cards")
+    @CheckSecurity(roles = {"ROLE_USER"})
+    public ResponseEntity<List<CardDto>> getUserCards(@PathVariable("id") Long id ) {
+        return new ResponseEntity<>(userService.getUserCards(id), HttpStatus.OK);
+    }
+    @GetMapping("/find/{email}")
+    @CheckSecurity(roles = {"ROLE_USER"})
+    public ResponseEntity<UserDto> getUserByEmail(@RequestHeader("Authorization") String authorization,@PathVariable("email") String email ) {
+        return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
     @PostMapping("/addcard")
