@@ -16,6 +16,8 @@ import com.a2.userservice.secutiry.service.TokenService;
 import com.a2.userservice.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private AdminRepository adminRepository;
     private UserMapper userMapper;
     private CardMapper cardMapper;
+    private JavaMailSender emailSender;
 
     public UserServiceImpl(TokenService tokenService, UserRepository userRepository,
                            UserRankRepository userRankRepository, CardRepository cardRepository,
@@ -102,6 +105,12 @@ public class UserServiceImpl implements UserService {
                  .format("User with id: %d not found.", ticketCancelDto.getUserId())));
          user.setMiles(user.getMiles() - ticketCancelDto.getMiles());
          userRepository.save(user);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("");
+        message.setTo(user.getEmail());
+        message.setSubject("Flight canceled");
+        message.setText("Your flight is canceled for ticket");
+        emailSender.send(message);
     }
 
     @Override
@@ -140,6 +149,12 @@ public class UserServiceImpl implements UserService {
     public UserDto addUser(UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoToUser(userCreateDto);
         userRepository.save(user);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("");
+        message.setTo(user.getEmail());
+        message.setSubject("Registration successful");
+        message.setText("Welcome "+user.getFirstName()+" "+user.getLastName()+" to flight and ticket service.");
+        emailSender.send(message);
         return userMapper.userToUserDto(user);
     }
 
