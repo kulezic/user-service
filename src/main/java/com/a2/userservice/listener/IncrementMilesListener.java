@@ -1,7 +1,6 @@
 package com.a2.userservice.listener;
 
 import com.a2.userservice.dto.IncrementMilesDto;
-import com.a2.userservice.dto.TicketCancelDto;
 import com.a2.userservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jms.annotation.JmsListener;
@@ -23,7 +22,7 @@ public class IncrementMilesListener {
 
     //, concurrency = "5-10"
     @JmsListener(destination = "${destination.increment-miles}")
-    public void handleCancelMiles(Message message){
+    public void handleIncrementMiles(Message message){
         try {
             String jsonText = ((TextMessage)message).getText();
             IncrementMilesDto incrementMilesDto = objectMapper.readValue(jsonText, IncrementMilesDto.class);

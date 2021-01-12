@@ -1,7 +1,5 @@
 package com.a2.userservice.dto;
 
-import java.math.BigDecimal;
-
 public class TicketCancelDto {
     private Long userId;
     private Long miles;
@@ -9,9 +7,6 @@ public class TicketCancelDto {
     public TicketCancelDto(Long userId, Long miles) {
         this.userId = userId;
         this.miles = miles;
-    }
-
-    public TicketCancelDto(Long userId, BigDecimal miles) {
     }
 
     public Long getUserId() {
