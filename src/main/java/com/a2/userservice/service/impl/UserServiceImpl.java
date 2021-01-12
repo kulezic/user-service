@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(TokenService tokenService, UserRepository userRepository,
                            UserRankRepository userRankRepository, CardRepository cardRepository,
                            RoleRepository roleRepository, AdminRepository adminRepository,
-                           UserMapper userMapper, CardMapper cardMapper) {
+                           UserMapper userMapper, CardMapper cardMapper, JavaMailSender emailSender) {
         this.tokenService = tokenService;
         this.userRepository = userRepository;
         this.userRankRepository = userRankRepository;
@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
         this.adminRepository = adminRepository;
         this.userMapper = userMapper;
         this.cardMapper = cardMapper;
+        this.emailSender = emailSender;
     }
 
     public DiscountDto findDiscount(Long id) {
@@ -149,12 +150,12 @@ public class UserServiceImpl implements UserService {
     public UserDto addUser(UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoToUser(userCreateDto);
         userRepository.save(user);
-       /* SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("");
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("sk2021test@gmail.com");
         message.setTo(user.getEmail());
         message.setSubject("Registration successful");
         message.setText("Welcome "+user.getFirstName()+" "+user.getLastName()+" to flight and ticket service.");
-        emailSender.send(message);*/
+        emailSender.send(message);
         return userMapper.userToUserDto(user);
     }
 
@@ -174,12 +175,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userDto.getUserId()).
                 orElseThrow(() -> new NotFoundException(String.format("User with id: %d not found.", userDto.getUserId())));
         if(!user.getEmail().equals(userDto.getEmail())){
-             /* SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("");
-            message.setTo(user.getEmail());
-            message.setSubject("Registration successful");
-            message.setText("Welcome "+user.getFirstName()+" "+user.getLastName()+" to flight and ticket service.");
-            emailSender.send(message);*/
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("sk2021test@gmail.com");
+            message.setTo(userDto.getEmail());
+            message.setSubject("Mail changed");
+            message.setText("Welcome "+userDto.getFirstName()+" "+userDto.getLastName()+" to flight and ticket service.");
+            emailSender.send(message);
         }
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());

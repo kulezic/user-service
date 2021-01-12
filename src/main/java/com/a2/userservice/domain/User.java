@@ -20,8 +20,6 @@ public class User {
     @ManyToOne(optional = false)
     private Role role;
     private Long miles;
-    @OneToOne
-    private Card priorityCardId;
 
     public User() {
     }
