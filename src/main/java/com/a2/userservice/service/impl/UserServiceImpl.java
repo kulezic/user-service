@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
          user.setMiles(user.getMiles() - ticketCancelDto.getMiles());
          userRepository.save(user);
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("");
+        message.setFrom("sk2021test@gmail.com");
         message.setTo(user.getEmail());
         message.setSubject("Flight canceled");
         message.setText("Your flight is canceled for ticket");
