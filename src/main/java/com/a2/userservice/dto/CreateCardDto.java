@@ -6,7 +6,7 @@ public class CreateCardDto {
 
     private Long userId;
     private String cardHolderName;
-    @Length(min = 20, max = 20)
+    @Length(min = 10, max = 10)
     private Long cardNumber;
     @Length(min = 3, max = 3)
     private Integer cif;

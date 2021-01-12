@@ -34,7 +34,7 @@ public class UserController {
 
     @PostMapping("/update")
     @CheckSecurity(roles = {"ROLE_USER"})
-    public ResponseEntity<UserDto> updateUser(@RequestBody @Valid UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(@RequestHeader("Authorization") String authorization,@RequestBody @Valid UserDto userDto) {
         return new ResponseEntity<>(userService.update(userDto), HttpStatus.OK);
     }
 
@@ -50,7 +50,8 @@ public class UserController {
 
     @PostMapping("/addcard")
     @CheckSecurity(roles = {"ROLE_USER"})
-    public ResponseEntity<CardDto> addCardUser(@RequestHeader("Authorization") String authorization,@RequestBody @Valid CreateCardDto createCardDto) {
+    public ResponseEntity<CardDto> addCardUser(@RequestHeader("Authorization") String authorization,@RequestBody CreateCardDto createCardDto) {
+        System.out.println(createCardDto.getCardHolderName() + " " + createCardDto.getCardNumber() + " " + createCardDto.getCif());
         return new ResponseEntity<>(userService.addCard(createCardDto), HttpStatus.CREATED);
     }
 

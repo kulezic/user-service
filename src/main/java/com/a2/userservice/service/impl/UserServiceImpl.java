@@ -149,12 +149,12 @@ public class UserServiceImpl implements UserService {
     public UserDto addUser(UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoToUser(userCreateDto);
         userRepository.save(user);
-        SimpleMailMessage message = new SimpleMailMessage();
+       /* SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("");
         message.setTo(user.getEmail());
         message.setSubject("Registration successful");
         message.setText("Welcome "+user.getFirstName()+" "+user.getLastName()+" to flight and ticket service.");
-        emailSender.send(message);
+        emailSender.send(message);*/
         return userMapper.userToUserDto(user);
     }
 
@@ -173,11 +173,19 @@ public class UserServiceImpl implements UserService {
     public UserDto update(UserDto userDto) {
         User user = userRepository.findById(userDto.getUserId()).
                 orElseThrow(() -> new NotFoundException(String.format("User with id: %d not found.", userDto.getUserId())));
+        if(!user.getEmail().equals(userDto.getEmail())){
+             /* SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("");
+            message.setTo(user.getEmail());
+            message.setSubject("Registration successful");
+            message.setText("Welcome "+user.getFirstName()+" "+user.getLastName()+" to flight and ticket service.");
+            emailSender.send(message);*/
+        }
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setPassportNo(userDto.getPassportNo());
-        return  null;
+        return  userMapper.userToUserDto(user);
     }
 
     @Override

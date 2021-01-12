@@ -1,6 +1,8 @@
 package com.a2.userservice.dto;
 
 
+import java.util.List;
+
 public class UserDto {
 
     private Long userId;
@@ -8,6 +10,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String passportNo;
+    private List<CardDto> cardDtos;
 
     public UserDto() {
     }
@@ -60,4 +63,11 @@ public class UserDto {
         this.passportNo = passportNo;
     }
 
+    public List<CardDto> getCardDtos() {
+        return cardDtos;
+    }
+
+    public void setCardDtos(List<CardDto> cardDtos) {
+        this.cardDtos = cardDtos;
+    }
 }
