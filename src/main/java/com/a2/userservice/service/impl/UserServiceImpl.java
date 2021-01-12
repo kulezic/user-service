@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,16 +53,13 @@ public class UserServiceImpl implements UserService {
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(String
                         .format("User with id: %d not found.", id)));
-        System.out.println(user);
         List<UserRank> userRankList = userRankRepository.findAll();
-        //get discount
         BigDecimal discount = BigDecimal.valueOf(userRankList.stream()
                 .filter(userRank -> userRank.getMaxNumberOfMiles() >= user.getMiles()
                         && userRank.getMinNumberOfMiles() <= user.getMiles())
                 .findAny()
                 .get()
                 .getDiscount());
-        System.out.println(discount);
         return new DiscountDto(discount);
     }
 
@@ -119,6 +117,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserRankDto findUserRank(Long id) {
+        User user = userRepository.findById(id).
+                orElseThrow(() -> new NotFoundException(String.format("User with id: %d not found.", id)));
+        List<UserRank> userRankList = userRankRepository.findAll();
+        String rankName = userRankList.stream()
+                .filter(userRank -> userRank.getMaxNumberOfMiles() >= user.getMiles()
+                        && userRank.getMinNumberOfMiles() <= user.getMiles())
+                .findAny()
+                .get()
+                .getName();
+        Long miles = user.getMiles();
+        return new UserRankDto(rankName, miles);
+    }
+
+    @Override
+    public List<CardDto> getUserCards(Long id) {
+        return cardRepository.findAllByUserId(id).stream().map(cardMapper::cardToCardDto).collect(Collectors.toList());
+    }
+
+    @Override
     public UserDto addUser(UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoToUser(userCreateDto);
         userRepository.save(user);
@@ -128,6 +146,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public CardDto addCard(CreateCardDto createCardDto) {
         Card card = cardMapper.cardCreateDtoToCard(createCardDto);
+        User user = userRepository.findById(createCardDto.getUserId()).
+                orElseThrow(() -> new NotFoundException(String.format("User with id: %d not found.", createCardDto.getUserId())));
+        card.setUser(user);
         cardRepository.save(card);
         CardDto cardDto = cardMapper.cardToCardDto(card);
         return cardDto;
@@ -135,6 +156,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto update(UserDto userDto) {
+        User user = userRepository.findById(userDto.getUserId()).
+                orElseThrow(() -> new NotFoundException(String.format("User with id: %d not found.", userDto.getUserId())));
+        user.setEmail(userDto.getEmail());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setPassportNo(userDto.getPassportNo());
         return  null;
     }
 

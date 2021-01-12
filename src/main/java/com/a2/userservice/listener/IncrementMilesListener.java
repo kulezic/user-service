@@ -1,5 +1,6 @@
 package com.a2.userservice.listener;
 
+import com.a2.userservice.dto.IncrementMilesDto;
 import com.a2.userservice.dto.TicketCancelDto;
 import com.a2.userservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,8 +26,8 @@ public class IncrementMilesListener {
     public void handleCancelMiles(Message message){
         try {
             String jsonText = ((TextMessage)message).getText();
-            TicketCancelDto ticketCancelDto = objectMapper.readValue(jsonText, TicketCancelDto.class);
-            userService.cancelTicket(ticketCancelDto);
+            IncrementMilesDto incrementMilesDto = objectMapper.readValue(jsonText, IncrementMilesDto.class);
+            userService.incrementMiles(incrementMilesDto);
         } catch (Exception  e) {
             e.printStackTrace();
         }

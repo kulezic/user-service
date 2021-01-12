@@ -1,20 +1,18 @@
 package com.a2.userservice.dto;
 
-import org.hibernate.validator.constraints.Length;
-
 public class CardDto {
 
-    private Long id;
+    private Long cardId;
     private String cardHolderName;
     private Long cardNumber;
     private Integer cif;
 
-    public Long getId() {
-        return id;
+    public Long getCardId() {
+        return cardId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCardId(Long cardId) {
+        this.cardId = cardId;
     }
 
     public String getCardHolderName() {

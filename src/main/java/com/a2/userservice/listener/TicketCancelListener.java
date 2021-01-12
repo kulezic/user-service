@@ -26,8 +26,8 @@ public class TicketCancelListener {
     public void handleCancelMiles(Message message){
         try {
             String jsonText = ((TextMessage)message).getText();
-            IncrementMilesDto incrementMilesDto = objectMapper.readValue(jsonText, IncrementMilesDto.class);
-            userService.incrementMiles(incrementMilesDto);
+            TicketCancelDto ticketCancelDto = objectMapper.readValue(jsonText, TicketCancelDto.class);
+            userService.cancelTicket(ticketCancelDto);
         } catch (Exception  e) {
             e.printStackTrace();
         }

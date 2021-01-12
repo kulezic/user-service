@@ -3,21 +3,29 @@ package com.a2.userservice.dto;
 
 public class UserDto {
 
-    private Long id;
+    private Long userId;
     private String email;
     private String firstName;
     private String lastName;
     private String passportNo;
-    private String password;
-    private CardDto priorityCard;
 
-
-    public Long getId() {
-        return id;
+    public UserDto() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public UserDto(Long userId, String email, String firstName, String lastName, String passportNo) {
+        this.userId = userId;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.passportNo = passportNo;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -52,11 +60,4 @@ public class UserDto {
         this.passportNo = passportNo;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

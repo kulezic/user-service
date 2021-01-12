@@ -26,4 +26,8 @@ public interface UserService {
     List<Admin> getAdmin();
 
     UserDto getUser(Long id);
+
+    UserRankDto findUserRank(Long id);
+
+    List<CardDto> getUserCards(Long id);
 }
